@@ -19,5 +19,15 @@ public class control : MonoBehaviour {
 
         v *= mod;
         rb.velocity = v;
+
+        foreach (slime s in FindObjectsOfType<slime>()) {
+            if (Vector2.Distance(s.transform.position, transform.position) < 0.25f) {
+                Lose();
+            }
+        }
+    }
+
+    void Lose() {
+        Debug.Log("L");
     }
 }

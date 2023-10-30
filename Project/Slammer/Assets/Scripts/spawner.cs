@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class spawner : MonoBehaviour {
     public GameObject prefab;
-    public List<slime> slimes;
     public float timer;
     public float secondTimer;
     public Vector2[] poss;
 
-    void Start() {
-        slimes = new List<slime>();
-    }
-
     void Update() {
+        slime[] slimes = FindObjectsOfType<slime>();
         timer += Time.deltaTime;
         secondTimer += Time.deltaTime;
         if (secondTimer > 1.0f) {
             secondTimer %= 1;
             for (int i = 0; i < Mathf.Ceil(timer / 60); i++) {
                 float chance = timer / (60 * (i + 1));
-                if (slimes.Count < 5) { chance *= 2; }
-                if (slimes.Count < 1) { chance *= 2; }
-                if (slimes.Count < 25 && Random.Range(0.0f, 1.0f) < chance) {
-                    slimes.Add(Spawn());
+                if (slimes.Length < 5) { chance *= 2; }
+                if (slimes.Length < 1) { chance *= 2; }
+                if (slimes.Length > 25) { chance /= 2; }
+                if (slimes.Length > 50) { chance /= 2; }
+                if (slimes.Length > 100) { chance = 0; }
+                if (Random.Range(0.0f, 1.0f) < chance) {
+                    Spawn().spdmod = 0.8f + Random.Range(0.0f, timer / 180.0f);
                 }
             }
         }
