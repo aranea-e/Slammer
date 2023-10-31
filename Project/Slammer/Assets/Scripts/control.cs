@@ -28,6 +28,6 @@ public class control : MonoBehaviour {
     }
 
     void Lose() {
-        Debug.Log("L");
+        transitions.Transition(1);
     }
 }

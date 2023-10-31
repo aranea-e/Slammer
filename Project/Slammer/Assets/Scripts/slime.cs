@@ -29,7 +29,12 @@ public class slime : MonoBehaviour {
                 if (s != this && Vector2.Distance(s.transform.position, transform.position) < rad) {
                     Destroy(s.gameObject);
                     streak++;
-                    FindObjectOfType<score>().s += 100 * streak;
+                    if (!(FindObjectOfType<transitions>().transitioning || FindObjectOfType<transitions>().detransitioning)) {
+                        FindObjectOfType<score>().s += 100 * streak;
+                        if (FindObjectOfType<score>().s > FindObjectOfType<score>().hs) {
+                            FindObjectOfType<score>().hs = FindObjectOfType<score>().s;
+                        }
+                    }
                 }
             }
         }

@@ -5,13 +5,43 @@ using TMPro;
 
 public class score : MonoBehaviour {
     public int s;
-    public TextMeshProUGUI t; 
+    public int hs;
+    public TextMeshProUGUI t;
+    public TextMeshProUGUI menus;
+    public TextMeshProUGUI menuh;
 
     void Awake() {
-        DontDestroyOnLoad(gameObject);
+        if (Object.FindObjectsOfType<score>().Length > 1) {
+            Destroy(gameObject);
+        } else {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     void Update() {
-        t.text = s.ToString();
+        FindText();
+        if (t != null) {
+            t.text = s.ToString();
+        }
+        if (menus != null) {
+            menus.text = "Score: " + s.ToString();
+        }
+        if (menuh != null) {
+            menuh.text = "High Score: " + hs.ToString();
+        }
+    }
+
+    void FindText() {
+        foreach (TextMeshProUGUI temp in FindObjectsOfType<TextMeshProUGUI>()) {
+            if (temp.text == "0") {
+                t = temp;
+            }
+            if (temp.text == "1") {
+                menus = temp;
+            }
+            if (temp.text == "2") {
+                menuh = temp;
+            }
+        }
     }
 }
