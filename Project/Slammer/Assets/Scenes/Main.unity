@@ -914,7 +914,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251072794}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.61, y: 9.73, z: 0}
+  m_LocalPosition: {x: 11.75, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1550,6 +1550,18 @@ MonoBehaviour:
   blockParent: {fileID: 1941937647}
   text: {fileID: 456672691}
   textInit: {x: 0, y: -300}
+  tips:
+  - Lining up several slimes at once can net you a lot of points!
+  - Avoid standing near the bottom - Slimes like to hide near the fence.
+  - The longer you survive, the faster the slimes get.
+  - You get 100 points for each slime killed, plus a bonus 100 for each consecutive
+    slime killed in the same attack!
+  - It's important to balance keeping a manageable amount of slimes while also trying
+    to get large collateral kills.
+  - Try to keep moving at all times.
+  - When you pull a slime towards you, try to avoid catching it. It doesn't work.
+  - To maximize your score, kill slimes without getting killed by slimes.
+  tip: 
 --- !u!114 &1951817287
 MonoBehaviour:
   m_ObjectHideFlags: 0

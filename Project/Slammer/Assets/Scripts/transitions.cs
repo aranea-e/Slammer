@@ -16,6 +16,8 @@ public class transitions : MonoBehaviour {
     public Vector2[][] blockInit;
     public TextMeshProUGUI text;
     public Vector2 textInit;
+    public string[] tips;
+    public string tip;
 
     void Awake() {
         if (Object.FindObjectsOfType<transitions>().Length > 1) {
@@ -48,10 +50,10 @@ public class transitions : MonoBehaviour {
             if (time > 1f) {
                 switch (con) {
                     case 0:
-                        text.text = "Placeholder 0";
+                        text.text = tip;
                         break;
                     case 1:
-                        text.text = "Placeholder 1";
+                        text.text = tip;
                         break;
                 }
                 float adjusted = time - 1f;
@@ -61,9 +63,10 @@ public class transitions : MonoBehaviour {
                 float percent = (0.5f - adjusted) / 0.5f;
                 text.GetComponent<RectTransform>().anchoredPosition = textInit * percent;
             }
-            if (time > 2f) {
+            if (time > 3f) {
                 transitioning = false;
                 detransitioning = true;
+                time = 2f;
                 switch (con) {
                     case 0:
                         SceneManager.LoadScene(0);
@@ -97,10 +100,10 @@ public class transitions : MonoBehaviour {
             if (time > 1f) {
                 switch (con) {
                     case 0:
-                        text.text = "Placeholder 0";
+                        text.text = tip;
                         break;
                     case 1:
-                        text.text = "Placeholder 1";
+                        text.text = tip;
                         break;
                 }
                 float adjusted = time - 1f;
@@ -133,6 +136,7 @@ public class transitions : MonoBehaviour {
         this.con = c;
         time = 0f;
         transitioning = true;
+        tip = tips[Random.Range(0, tips.Length)];
         blocks = new GameObject[17][];
         blockTargets = new Vector2[17][];
         blockInit = new Vector2[17][];
