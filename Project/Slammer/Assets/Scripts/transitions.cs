@@ -71,6 +71,8 @@ public class transitions : MonoBehaviour {
                     case 0:
                         SceneManager.LoadScene(0);
                         FindObjectOfType<score>().s = 0;
+                        FindObjectOfType<score>().first = false;
+                        FindObjectOfType<score>().newHS = false;
                         break;
                     case 1:
                         SceneManager.LoadScene(1);

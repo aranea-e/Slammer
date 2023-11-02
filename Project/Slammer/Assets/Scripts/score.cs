@@ -9,6 +9,9 @@ public class score : MonoBehaviour {
     public TextMeshProUGUI t;
     public TextMeshProUGUI menus;
     public TextMeshProUGUI menuh;
+    public TextMeshProUGUI ht;
+    public bool first = true;
+    public bool newHS;
 
     void Awake() {
         if (Object.FindObjectsOfType<score>().Length > 1) {
@@ -28,6 +31,20 @@ public class score : MonoBehaviour {
         }
         if (menuh != null) {
             menuh.text = "High Score: " + hs.ToString();
+            if (newHS) {
+                menuh.text = "";
+            }
+        }
+        if (ht != null) {
+            if (first) {
+                ht.text = "";
+            } else {
+                if (newHS) {
+                    ht.text = "New High Score!";
+                } else {
+                    ht.text = "High Score: " + hs.ToString();
+                }
+            }
         }
     }
 
@@ -41,6 +58,9 @@ public class score : MonoBehaviour {
             }
             if (temp.text == "2") {
                 menuh = temp;
+            }
+            if (temp.text == "3") {
+                ht = temp;
             }
         }
     }

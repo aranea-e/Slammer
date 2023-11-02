@@ -7,6 +7,11 @@ public class control : MonoBehaviour {
     public float mod;
 
     void FixedUpdate() {
+        if (FindObjectOfType<transitions>().transitioning) {
+            rb.velocity *= 0.9f;
+            gameObject.GetComponent<playerAnimation>().manualUpdate(new Vector3());
+            return;
+        } 
         Vector2 v = new Vector2();
         if (Input.GetKey("w")) v.y += 1;
         if (Input.GetKey("a")) v.x -= 1;
@@ -19,6 +24,7 @@ public class control : MonoBehaviour {
 
         v *= mod;
         rb.velocity = v;
+        gameObject.GetComponent<playerAnimation>().manualUpdate(rb.velocity);
 
         foreach (slime s in FindObjectsOfType<slime>()) {
             if (Vector2.Distance(s.transform.position, transform.position) < 0.25f) {
@@ -29,5 +35,6 @@ public class control : MonoBehaviour {
 
     void Lose() {
         transitions.Transition(1);
+        audioManager.play("death");
     }
 }

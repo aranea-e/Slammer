@@ -12,8 +12,10 @@ public class slime : MonoBehaviour {
     public float rad;
     public int streak = 0;
     public float spdmod;
+    public Animator a; 
 
     void Update() {
+        a.SetBool("Left", transform.position.x > FindObjectOfType<control>().transform.position.x);
         t += Time.deltaTime * spdmod;
         float speed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.y * rb.velocity.y));
         if (t / 3.0f > 1.0f && !proj && !capt && speed < 0.1f) {
@@ -28,11 +30,13 @@ public class slime : MonoBehaviour {
             foreach (slime s in FindObjectsOfType<slime>()) {
                 if (s != this && Vector2.Distance(s.transform.position, transform.position) < rad) {
                     Destroy(s.gameObject);
+                    audioManager.play("kill");
                     streak++;
                     if (!(FindObjectOfType<transitions>().transitioning || FindObjectOfType<transitions>().detransitioning)) {
                         FindObjectOfType<score>().s += 100 * streak;
                         if (FindObjectOfType<score>().s > FindObjectOfType<score>().hs) {
                             FindObjectOfType<score>().hs = FindObjectOfType<score>().s;
+                            FindObjectOfType<score>().newHS = true;
                         }
                     }
                 }
@@ -48,6 +52,8 @@ public class slime : MonoBehaviour {
     }
 
     void Move() {
+        a.SetTrigger("Jump");
+        audioManager.play("jump");
         Vector2 direction = FindObjectOfType<control>().transform.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x);
         angle += Random.Range(-0.3f, 0.3f);

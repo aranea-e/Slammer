@@ -12,9 +12,11 @@ public class hook : MonoBehaviour {
     public slime hooked;
     public float pullmod;
     public SpriteRenderer sprite;
+    public Vector3 playerPos;
 
     void Update() {
         sprite.enabled = state != "retracted";
+        playerPos = FindObjectOfType<control>().transform.position - new Vector3 (0.25f, 0.25f, 0);
         switch(state) {
             case "retracted":
                 Retracted();
@@ -52,8 +54,9 @@ public class hook : MonoBehaviour {
             Vector2 mods = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
             rb.velocity = mods * distance;
             state = "throw";
+            audioManager.play("throw");
         } else {
-            transform.position = FindObjectOfType<control>().transform.position;
+            transform.position = playerPos;
         }
     }
 
@@ -85,15 +88,16 @@ public class hook : MonoBehaviour {
     void Hooked() {
         transform.position = hooked.transform.position;
         if (!Input.GetMouseButton(0)) {
-            Vector2 direction = FindObjectOfType<control>().transform.position - transform.position;
+            Vector2 direction = playerPos - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x);
             Vector2 mods = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
             hooked.rb.velocity = mods * distance * pullmod 
-                * Vector2.Distance(FindObjectOfType<control>().transform.position, transform.position);
+                * Vector2.Distance(playerPos, transform.position);
             hooked.capt = false;
             hooked.proj = true;
             hooked = null;
             state = "retract";
+            audioManager.play("pull");
             return;
         }
     }
@@ -106,12 +110,12 @@ public class hook : MonoBehaviour {
 
     void Retract() {
         target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = FindObjectOfType<control>().transform.position - transform.position;
+        Vector2 direction = playerPos - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x);
         Vector2 mods = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         rb.velocity = mods * distance;
         
-        if (Vector2.Distance(FindObjectOfType<control>().transform.position, transform.position) < rad) {
+        if (Vector2.Distance(playerPos, transform.position) < rad) {
             state = "retracted";
         }
     }
